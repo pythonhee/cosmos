@@ -4,12 +4,12 @@ title: About Me
 permalink: /about/
 ---
 
- `❁` 프로젝트
-    - CNN (2022.06.20)
+ `❁` 프로젝트    
+- CNN (2022.06.20)
     
     
  `❁` 사용언어
-    - python3
+- python3
  
 
 This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
