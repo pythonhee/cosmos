@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Title | sohee🌸</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Title" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
+<meta property="og:description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
+<link rel="canonical" href="https://pythonhee.github.io/cosmos/2022/07/18/_06_27_CNN.html" />
+<meta property="og:url" content="https://pythonhee.github.io/cosmos/2022/07/18/_06_27_CNN.html" />
+<meta property="og:site_name" content="sohee🌸" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-18T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Title" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-07-18T00:00:00-05:00","datePublished":"2022-07-18T00:00:00-05:00","description":"An easy to use blogging platform with support for Jupyter Notebooks.","headline":"Title","mainEntityOfPage":{"@type":"WebPage","@id":"https://pythonhee.github.io/cosmos/2022/07/18/_06_27_CNN.html"},"url":"https://pythonhee.github.io/cosmos/2022/07/18/_06_27_CNN.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cosmos/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://pythonhee.github.io/cosmos/feed.xml" title="sohee🌸" /><link rel="shortcut icon" type="image/x-icon" href="/cosmos/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/cosmos/">sohee🌸</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/cosmos/about/">About Me</a><a class="page-link" href="/cosmos/search/">Search</a><a class="page-link" href="/cosmos/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Title</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-18T00:00:00-05:00" itemprop="datePublished">
+        Jul 18, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/pythonhee/cosmos/tree/master/_notebooks/2022_06_27_CNN.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/cosmos/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/pythonhee/cosmos/master?filepath=_notebooks%2F2022_06_27_CNN.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/cosmos/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/pythonhee/cosmos/blob/master/_notebooks/2022_06_27_CNN.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/cosmos/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fpythonhee%2Fcosmos%2Fblob%2Fmaster%2F_notebooks%2F2022_06_27_CNN.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/cosmos/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022_06_27_CNN.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>기초 배우기</p>
+</blockquote>
+<ol>
+<li>6_1_linear_regression</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="6_1_linear_regression">6_1_linear_regression<a class="anchor-link" href="#6_1_linear_regression"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>Q</code> cost함수를 생성하시오</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">cost</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+    <span class="n">hx</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span> 
+    <span class="n">c</span> <span class="o">+=</span> <span class="p">(</span><span class="n">hx</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+  
+  <span class="k">return</span> <span class="n">c</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>Q</code> gradient_descent 함수를 생성하시오</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">gradient_descent</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+    <span class="n">hx</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="c1"># c += [2 * (hx - y[i])] * (hx - y[i])</span>
+    <span class="c1"># c += [2 * (hx - y[i])] * (w * x[i] - y[i])</span>
+    <span class="c1"># c += 2 * hx - y[i] * x[i]</span>
+    <span class="n">c</span> <span class="o">+=</span> <span class="p">(</span><span class="n">hx</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+  <span class="k">return</span> <span class="n">c</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>Q</code> cost 확인하기</p>
+<ul>
+<li>w, c를 그래프로 나타내시오</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">show_cost</span><span class="p">():</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="c1">#  print(cost(x, y, 0))  w = 0 </span>
+<span class="c1">#  print(cost(x, y, 1))  w = 1</span>
+<span class="c1">#  print(cost(x, y, 2))  w = 2</span>
+
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">):</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="mi">10</span>          <span class="c1"># w = - 3.0 ~ 4.9</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">cost</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+    <span class="c1"># print(w, c)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">show_cost</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+" />
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>Q</code> w 값을 1로 만드는 함수를 생성하고 x가 5, 7 값을 가질 때 y를 예측하시오.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">show_gradient</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">cost</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">gradient_descent</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+        <span class="n">w</span> <span class="o">-=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">g</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;5 -&gt;&#39;</span><span class="p">,</span> <span class="n">w</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;7 -&gt;&#39;</span><span class="p">,</span> <span class="n">w</span> <span class="o">*</span> <span class="mi">7</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">show_gradient</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0 3.133333333333333
+1 2.1377777777777776
+2 1.6068148148148147
+3 1.3236345679012345
+4 1.1726051028806583
+5 1.0920560548696845
+6 1.049096562597165
+7 1.0261848333851546
+8 1.0139652444720824
+9 1.0074481303851106
+5 -&gt; 5.037240651925553
+7 -&gt; 7.052136912695774
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><a class="u-url" href="/cosmos/2022/07/18/_06_27_CNN.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cosmos/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/cosmos/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/cosmos/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" target="_blank" title="fastai"><svg class="svg-icon grey"><use xlink:href="/cosmos/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
