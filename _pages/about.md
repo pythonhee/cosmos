@@ -12,8 +12,6 @@ permalink: /about/
 - python3
  
 
-This website is powered by **[pythonhee](https://github.com/pythonhee)** [^1].
-
-
+This website is powered by **[cosmos](https://github.com/pythonhee/cosmos)** [^1].
 
 [^1]:CNN 공부하는 중.
