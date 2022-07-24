@@ -12,7 +12,7 @@ permalink: /about/
 - python3
  
 
-This website is powered by **[cosmos](https://pythonhee.github.io/cosmos/)** [^1].
+This website is powered by **[pythonhee](https://github.com/pythonhee)** [^1].
 
 
 
