@@ -79,7 +79,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      6 min read
+      7 min read
     
 </span></p>
 
@@ -610,46 +610,13 @@ acc : 0.37890625
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[  6.    148.     72.    ...  33.6     0.627  50.   ]
- [  1.     85.     66.    ...  26.6     0.351  31.   ]
- [  8.    183.     64.    ...  23.3     0.672  32.   ]
- ...
- [  5.    121.     72.    ...  26.2     0.245  30.   ]
- [  1.    126.     60.    ...  30.1     0.349  47.   ]
- [  1.     93.     70.    ...  30.4     0.315  23.   ]]
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -669,6 +636,15 @@ acc : 0.37890625
         <span class="c1"># (600, 1) = (600, 8) @ (8, 1)</span>
         <span class="c1"># (168, 1) = (168, 8) @ (8, 1)</span>
         <span class="k">return</span> <span class="n">x</span> <span class="o">@</span> <span class="n">w</span> <span class="o">+</span> <span class="n">b</span>
+
+    <span class="n">indian</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/content/pima-indians-diabetes.csv'</span><span class="p">,</span> <span class="n">skiprows</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">indian</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span> <span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>         <span class="c1">#(768, 8)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">indian</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span> <span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]</span>         <span class="c1">#(768, 1)</span>
+       
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
     <span class="n">x</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>              <span class="c1"># 표준화. </span>
     <span class="c1"># x = preprocessing.minmax_scale(x)     # 정규화. </span>
@@ -712,7 +688,6 @@ acc : 0.37890625
     <span class="nb">print</span><span class="p">(</span><span class="s1">'acc :'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">p_flat</span> <span class="o">==</span> <span class="n">y_flat</span><span class="p">))</span>
     
 
-
 <span class="n">logistic_regression_indian</span><span class="p">()</span>
 </pre></div>
 
@@ -725,23 +700,115 @@ acc : 0.37890625
 
 <div class="output_area">
 
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">UnboundLocalError</span>                         Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-81-81a5784ad61a&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">     49</span> 
-<span class="ansi-green-intense-fg ansi-bold">     50</span> 
-<span class="ansi-green-fg">---&gt; 51</span><span class="ansi-red-fg"> </span>logistic_regression_indian<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(768, 8) (768, 1)
+(537, 8) (231, 8)
+(537, 1) (231, 1)
+0 0.8600766
+10 0.8498678
+20 0.83989316
+30 0.8301486
+40 0.82062995
+50 0.8113334
+60 0.8022548
+70 0.7933905
+80 0.78473663
+90 0.77628946
+100 0.7680453
+110 0.76000077
+120 0.75215214
+130 0.744496
+140 0.7370289
+150 0.7297474
+160 0.7226483
+170 0.7157283
+180 0.7089841
+190 0.70241266
+200 0.69601053
+210 0.68977475
+220 0.6837024
+230 0.67779016
+240 0.67203516
+250 0.6664344
+260 0.6609849
+270 0.65568364
+280 0.65052783
+290 0.64551455
+300 0.64064085
+310 0.63590395
+320 0.63130105
+330 0.62682927
+340 0.62248594
+350 0.6182682
+360 0.6141733
+370 0.61019856
+380 0.60634124
+390 0.6025988
+400 0.5989683
+410 0.59544736
+420 0.5920332
+430 0.5887234
+440 0.5855152
+450 0.58240604
+460 0.5793936
+470 0.5764753
+480 0.5736487
+490 0.5709112
+500 0.5682606
+510 0.5656945
+520 0.56321055
+530 0.5608064
+540 0.5584798
+550 0.55622864
+560 0.5540505
+570 0.55194336
+580 0.54990524
+590 0.5479338
+600 0.54602724
+610 0.5441833
+620 0.54240036
+630 0.5406763
+640 0.53900933
+650 0.53739756
+660 0.53583926
+670 0.5343327
+680 0.5328762
+690 0.53146803
+700 0.5301067
+710 0.52879065
+720 0.5275183
+730 0.52628803
+740 0.52509856
+750 0.52394855
+760 0.5228367
+770 0.5217614
+780 0.5207217
+790 0.51971614
+800 0.51874363
+810 0.51780313
+820 0.5168932
+830 0.5160131
+840 0.5151616
+850 0.51433766
+860 0.51354045
+870 0.5127689
+880 0.51202214
+890 0.5112994
+900 0.5105997
+910 0.50992215
+920 0.5092661
+930 0.5086309
+940 0.50801545
+950 0.50741935
+960 0.5068418
+970 0.5062823
+980 0.5057399
+990 0.5052143
 
-<span class="ansi-green-fg">&lt;ipython-input-81-81a5784ad61a&gt;</span> in <span class="ansi-cyan-fg">logistic_regression_indian</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      6</span>         <span class="ansi-green-fg">return</span> x <span class="ansi-blue-fg">@</span> w <span class="ansi-blue-fg">+</span> b
-<span class="ansi-green-intense-fg ansi-bold">      7</span> 
-<span class="ansi-green-fg">----&gt; 8</span><span class="ansi-red-fg">     </span>x <span class="ansi-blue-fg">=</span> preprocessing<span class="ansi-blue-fg">.</span>scale<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>              <span class="ansi-red-fg"># 표준화.</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span>     <span class="ansi-red-fg"># x = preprocessing.minmax_scale(x)     # 정규화.</span>
-<span class="ansi-green-intense-fg ansi-bold">     10</span> 
-
-<span class="ansi-red-fg">UnboundLocalError</span>: local variable 'x' referenced before assignment</pre>
+[0 0 1 1 0 1 0 0 1 1]
+[0 0 1 1 1 1 0 0 1 1]
+acc : 0.7965367965367965
+</pre>
 </div>
 </div>
 
