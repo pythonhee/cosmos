@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>softmax regression 함수를 사용한 iris 프로젝트 | sohee🌸</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="softmax regression 함수를 사용한 iris 프로젝트" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
+<meta property="og:description" content="An easy to use blogging platform with support for Jupyter Notebooks." />
+<link rel="canonical" href="https://pythonhee.github.io/cosmos/2022/07/04/CNN.html" />
+<meta property="og:url" content="https://pythonhee.github.io/cosmos/2022/07/04/CNN.html" />
+<meta property="og:site_name" content="sohee🌸" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-04T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="softmax regression 함수를 사용한 iris 프로젝트" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-07-04T00:00:00-05:00","datePublished":"2022-07-04T00:00:00-05:00","description":"An easy to use blogging platform with support for Jupyter Notebooks.","headline":"softmax regression 함수를 사용한 iris 프로젝트","mainEntityOfPage":{"@type":"WebPage","@id":"https://pythonhee.github.io/cosmos/2022/07/04/CNN.html"},"url":"https://pythonhee.github.io/cosmos/2022/07/04/CNN.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/cosmos/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://pythonhee.github.io/cosmos/feed.xml" title="sohee🌸" /><link rel="shortcut icon" type="image/x-icon" href="/cosmos/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/cosmos/">sohee🌸</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/cosmos/about/">About Me</a><a class="page-link" href="/cosmos/search/">Search</a><a class="page-link" href="/cosmos/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">softmax regression 함수를 사용한 iris 프로젝트</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-04T00:00:00-05:00" itemprop="datePublished">
+        Jul 4, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      77 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/pythonhee/cosmos/tree/master/_notebooks/2022-07-04-CNN.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/cosmos/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/pythonhee/cosmos/master?filepath=_notebooks%2F2022-07-04-CNN.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/cosmos/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/pythonhee/cosmos/blob/master/_notebooks/2022-07-04-CNN.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/cosmos/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fpythonhee%2Fcosmos%2Fblob%2Fmaster%2F_notebooks%2F2022-07-04-CNN.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/cosmos/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#11_1_iris">11_1_iris </a></li>
+<li class="toc-entry toc-h2"><a href="#11_2_iris_sparse">11_2_iris_sparse </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-07-04-CNN.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="11_1_iris">
+<a class="anchor" href="#11_1_iris" aria-hidden="true"><span class="octicon octicon-link"></span></a>11_1_iris<a class="anchor-link" href="#11_1_iris"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>Q</code> iris_onehot.csv 파일 읽어서 품종 구분하는 딥러닝 모델 구축</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">model_selection</span><span class="p">,</span> <span class="n">preprocessing</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>x, y 데이터 설정</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">make_xy_1</span><span class="p">():</span>
+  <span class="n">iris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/content/iris_onehot.csv'</span><span class="p">)</span>
+  
+  <span class="k">return</span> <span class="n">iris</span><span class="o">.</span><span class="n">valuse</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">3</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">3</span><span class="p">:])</span>
+
+<span class="c1"># y의 문자데이터를 코딩을 이용해 0,1로 변환해 설정하기</span>
+<span class="k">def</span> <span class="nf">make_xy_onehot</span><span class="p">():</span>
+  <span class="n">iris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/content/iris.csv'</span><span class="p">)</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">variety</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+  <span class="nb">bin</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">LabelBinarizer</span><span class="p">()</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="nb">bin</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">variety</span><span class="p">)</span>
+  <span class="c1">#print(y)</span>
+
+  <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+<span class="c1"># y데이터를 LabelBinarizer를 이용해 변환 후 x데이터 설정하기</span>
+<span class="k">def</span> <span class="nf">make_xy_onehot_2</span><span class="p">():</span>
+  <span class="n">iris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/content/iris.csv'</span><span class="p">)</span>
+  <span class="c1"># print(iris)</span>
+
+  <span class="n">variety</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">variety</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">variety</span><span class="p">)</span>
+
+  <span class="nb">bin</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">LabelBinarizer</span><span class="p">()</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="nb">bin</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">variety</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+  <span class="n">df</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">'variety'</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span>
+
+  <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>softmax 모델 구축</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">softmax_regression_iris</span><span class="p">():</span>
+  <span class="k">def</span> <span class="nf">Dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="c1"># (150, 3) = (150, 4) @ (4, 3)</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">@</span> <span class="n">w</span> <span class="o">+</span> <span class="n">b</span>
+
+  <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_xy_onehot</span><span class="p">()</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># shuffle 해주기 !</span>
+  <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+  <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+
+  <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">train_size</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">)</span>
+
+  <span class="n">w</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>   
+  <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">([</span><span class="mi">3</span><span class="p">]))</span>
+ 
+  <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+      <span class="n">z</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+      <span class="n">hx</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+      <span class="n">cce</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">CategoricalCrossentropy</span><span class="p">()</span>
+      <span class="n">loss</span> <span class="o">=</span> <span class="n">cce</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">hx</span><span class="p">)</span>
+
+    <span class="n">gradient1</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">gradient1</span><span class="p">,</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">]))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'loss'</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span><span class="s1">':'</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+
+<span class="c1"># 예측하기</span>
+
+    <span class="n">z</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+<span class="c1"># y와 predict 비교하기</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">y_test</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[:</span><span class="mi">5</span><span class="p">])</span>
+
+    <span class="n">p_arg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>    <span class="c1"># argmax 가장 큰 값의 위치를 찾음. </span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p_arg</span><span class="p">)</span>
+    <span class="n">y_arg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">y_arg</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'acc :'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">p_arg</span> <span class="o">==</span> <span class="n">y_arg</span><span class="p">))</span>
+
+<span class="n">softmax_regression_iris</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(150, 4) (150, 3)
+loss 0 : 2.5280607
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.16958746 0.8050397  0.02537283]
+ [0.1672936  0.8144725  0.01823393]
+ [0.21000955 0.7747021  0.01528837]
+ [0.19635046 0.78429633 0.01935316]
+ [0.21480352 0.7684872  0.01670929]]
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.26666666666666666
+loss 1 : 2.2871163
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21140496 0.75096595 0.03762908]
+ [0.21609282 0.75518525 0.02872196]
+ [0.2745011  0.700351   0.02514793]
+ [0.2518183  0.71797955 0.03020217]
+ [0.2778974  0.69507647 0.02702617]]
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.26666666666666666
+loss 2 : 2.0829644
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.24800634 0.69838655 0.05360711]
+ [0.26005036 0.6967982  0.04315143]
+ [0.3311603  0.62963104 0.03920873]
+ [0.3008595  0.65418625 0.04495425]
+ [0.3327994  0.6256781  0.04152245]]
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.26666666666666666
+loss 3 : 1.9118203
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.27616304 0.65022254 0.07361448]
+ [0.29462257 0.64326084 0.06211656]
+ [0.37397382 0.56765056 0.05837557]
+ [0.3387254  0.59709805 0.06417652]
+ [0.37395483 0.5650169  0.06102823]]
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.26666666666666666
+loss 4 : 1.7681406
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.29494652 0.60733426 0.09771918]
+ [0.3181536  0.5958523  0.08599413]
+ [0.40125382 0.51532775 0.08341847]
+ [0.36401057 0.54775    0.08823938]
+ [0.39994684 0.5138339  0.08621933]]
+[1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.26666666666666666
+loss 5 : 1.6472435
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.30508208 0.5693566  0.1255614 ]
+ [0.33116394 0.5541538  0.11468222]
+ [0.41415212 0.4712562  0.11459162]
+ [0.37761855 0.5053379  0.11704349]
+ [0.4120296  0.47071642 0.11725397]]
+[1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.26666666666666666
+loss 6 : 1.5461558
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.30816075 0.5356208  0.15621845]
+ [0.335372   0.5172657  0.14736223]
+ [0.41520545 0.43356496 0.15122956]
+ [0.38162002 0.46860492 0.14977513]
+ [0.4127422  0.43385148 0.15340623]]
+[1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1
+ 1 1 0 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.26666666666666666
+loss 7 : 1.4630909
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.30608845 0.5056551  0.18825649]
+ [0.33300495 0.48451608 0.18247895]
+ [0.4075264  0.4008656  0.19160803]
+ [0.37853706 0.4365794  0.1848835 ]
+ [0.4051329  0.40190345 0.19296362]]
+[1 1 0 1 0 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 1 1 0 1 1 1 1 1 1 1
+ 1 1 0 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.26666666666666666
+loss 8 : 1.396543
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.30072755 0.4792752  0.21999727]
+ [0.32634738 0.4556255  0.21802707]
+ [0.39430216 0.37244087 0.23325698]
+ [0.370898   0.40873164 0.22037037]
+ [0.39227998 0.37417483 0.23354514]]
+[1 1 0 1 0 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 1 0 0 1 1 1 1 1 1 1
+ 1 1 0 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.26666666666666666
+loss 9 : 1.3446547
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.293664   0.4564452  0.24989091]
+ [0.31741646 0.43054828 0.25203535]
+ [0.3783719  0.3480132  0.2736149 ]
+ [0.36091217 0.3848142  0.25427365]
+ [0.3768948  0.35038212 0.27272308]]
+[1 1 0 1 0 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 1 0 0 1 1 1 1 1 1 0
+ 1 1 0 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.24444444444444444
+loss 10 : 1.3050745
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.28607923 0.4371049  0.27681592]
+ [0.3077548  0.40924764 0.28299755]
+ [0.36190602 0.32743445 0.31065953]
+ [0.35026035 0.36464167 0.28509796]
+ [0.36103624 0.33036178 0.30860195]]
+[1 1 0 1 0 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 1 0 0 1 1 1 1 1 1 0
+ 1 1 0 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.24444444444444444
+loss 11 : 1.275201
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.27873784 0.4210751  0.300187  ]
+ [0.2983783  0.39155906 0.3100626 ]
+ [0.34630466 0.31048292 0.34321243]
+ [0.340042   0.34795484 0.31200317]
+ [0.3460238  0.31388474 0.34009147]]
+[1 1 0 1 0 1 1 1 2 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 0 0 0 1 2 0 1 1 1 1 1 1 0
+ 2 1 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.3333333333333333
+loss 12 : 1.2525458
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.2720552  0.40805382 0.31989104]
+ [0.28984594 0.37717116 0.33298287]
+ [0.3322932  0.29681596 0.37089083]
+ [0.3308547  0.33439574 0.3347496 ]
+ [0.33254042 0.30060837 0.36685127]]
+[1 1 2 2 2 2 2 1 2 1 1 1 0 1 1 1 1 2 1 1 2 1 1 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 1 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5333333333333333
+loss 13 : 1.2350031
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.26619953 0.39766064 0.33613983]
+ [0.28238627 0.36567622 0.35193747]
+ [0.3201175  0.28600648 0.39387596]
+ [0.32293382 0.32354292 0.35352322]
+ [0.32081473 0.29011372 0.3890716 ]]
+[1 1 2 2 2 2 2 1 2 1 1 1 2 1 1 1 1 2 1 1 2 2 1 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 1 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5777777777777777
+loss 14 : 1.2209473
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.26118812 0.3894929  0.349319  ]
+ [0.27602586 0.35663247 0.36734173]
+ [0.30973956 0.27760294 0.41265753]
+ [0.31629366 0.3149626  0.36874378]
+ [0.31080875 0.2819604  0.4072309 ]]
+[1 2 2 2 2 2 2 1 2 1 1 1 2 1 1 1 1 2 1 1 2 2 1 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5333333333333333
+loss 15 : 1.2092093
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.25695783 0.38316467 0.3598775 ]
+ [0.2706818  0.34961614 0.37970203]
+ [0.30097812 0.27117717 0.4278447 ]
+ [0.31083032 0.30824882 0.38092083]
+ [0.3023497  0.2757329  0.42191738]]
+[1 2 2 2 2 2 2 1 2 1 1 1 2 1 1 1 1 2 1 1 2 2 1 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5333333333333333
+loss 16 : 1.1989874
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.2534103  0.37833214 0.36825755]
+ [0.26622593 0.3442461  0.389528  ]
+ [0.29360116 0.2663505  0.44004828]
+ [0.306393   0.30304295 0.39056405]
+ [0.2952163  0.27106228 0.4337214 ]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 1 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4888888888888889
+loss 17 : 1.189751
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.25043985 0.37469983 0.3748603 ]
+ [0.2625192  0.34019616 0.39728457]
+ [0.2873756  0.2628016  0.44982287]
+ [0.30281854 0.29904094 0.39814046]
+ [0.28918585 0.26763713 0.44317707]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4444444444444444
+loss 18 : 1.1811578
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.24794655 0.37202215 0.38003135]
+ [0.25943    0.33719507 0.40337494]
+ [0.28208804 0.2602653  0.45764664]
+ [0.29995418 0.29599318 0.40405264]
+ [0.284055   0.2651992  0.4507458 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 19 : 1.1729896
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.24584115 0.37009892 0.38405994]
+ [0.2568427  0.33502245 0.40813485]
+ [0.2775563  0.25852767 0.46391594]
+ [0.29766697 0.29369614 0.40863687]
+ [0.27964902 0.26354003 0.45681086]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 20 : 1.1651105
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.24404816 0.36876908 0.3871827 ]
+ [0.25465828 0.3335012  0.4118406 ]
+ [0.27362803 0.2574165  0.4689555 ]
+ [0.29584217 0.29198867 0.4121692 ]
+ [0.27582273 0.2624923  0.46168497]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 21 : 1.1574353
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.24250482 0.36790472 0.3895904 ]
+ [0.25279543 0.3324902  0.4147144 ]
+ [0.2701796  0.2567967  0.4730237 ]
+ [0.29438618 0.2907418  0.41487202]
+ [0.27245748 0.26192358 0.46561885]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 22 : 1.1499119
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.24115962 0.36740378 0.3914366 ]
+ [0.25118732 0.33187824 0.41693446]
+ [0.26711076 0.25656015 0.47632906]
+ [0.29322186 0.2898549  0.41692322]
+ [0.2694572  0.26172963 0.4688132 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 23 : 1.1425077
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.23997092 0.36718684 0.39284223]
+ [0.2497802  0.3315775  0.4186423 ]
+ [0.26434177 0.25662306 0.4790351 ]
+ [0.292287   0.2892484  0.41846463]
+ [0.2667454  0.26182768 0.4714269 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 24 : 1.1352032
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.23890544 0.36719084 0.3939037 ]
+ [0.24853113 0.33151883 0.41995004]
+ [0.2618094  0.25691894 0.48127168]
+ [0.29153186 0.28886008 0.41960812]
+ [0.26426148 0.2621527  0.47358578]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 25 : 1.1279863
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.23793642 0.36736694 0.39469665]
+ [0.24740544 0.33164936 0.42094517]
+ [0.2594634  0.25739613 0.48314044]
+ [0.29091632 0.28864247 0.42044118]
+ [0.26195675 0.26265517 0.47538805]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 26 : 1.1208495
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.23704237 0.3676771  0.3952805 ]
+ [0.24637583 0.3319272  0.421697  ]
+ [0.25726464 0.25801426 0.48472118]
+ [0.2904089  0.28855756 0.42103362]
+ [0.25979346 0.26329514 0.4769114 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 27 : 1.1137886
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.23620649 0.36809158 0.39570197]
+ [0.24542052 0.33231944 0.4222601 ]
+ [0.25518098 0.25874162 0.4860774 ]
+ [0.28998426 0.28857616 0.42143962]
+ [0.25774175 0.26404145 0.4782167 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 28 : 1.1068007
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.23541479 0.36858726 0.39599794]
+ [0.24452212 0.332801   0.4226769 ]
+ [0.2531885  0.25955406 0.48725742]
+ [0.28962195 0.28867587 0.4217022 ]
+ [0.25577757 0.26487082 0.4793516 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 29 : 1.0998839
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.23465699 0.3691461  0.3961969 ]
+ [0.24366662 0.33335245 0.4229809 ]
+ [0.2512676  0.2604324  0.48830006]
+ [0.28930587 0.28883997 0.4218542 ]
+ [0.2538824  0.26576445 0.4803532 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 30 : 1.0930376
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.2339243  0.3697549  0.39632082]
+ [0.24284351 0.33395857 0.42319795]
+ [0.2494031  0.26136124 0.48923567]
+ [0.28902355 0.28905413 0.42192233]
+ [0.25204143 0.26670766 0.48125094]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 31 : 1.0862609
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.23320998 0.37040225 0.39638776]
+ [0.2420443  0.33460745 0.42334828]
+ [0.24758299 0.2623298  0.4900872 ]
+ [0.28876492 0.2893082  0.42192686]
+ [0.25024354 0.26768956 0.4820669 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 32 : 1.0795535
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.23250878 0.3710802  0.396411  ]
+ [0.24126181 0.33528993 0.42344823]
+ [0.24579765 0.2633287  0.4908736 ]
+ [0.2885222  0.28959426 0.42188352]
+ [0.24847956 0.26870072 0.48281977]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 33 : 1.0729148
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.23181655 0.3717821  0.39640135]
+ [0.24049057 0.3359995  0.4235099 ]
+ [0.24403983 0.26435083 0.49160925]
+ [0.28828835 0.28990674 0.42180496]
+ [0.24674186 0.26973465 0.48352346]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 34 : 1.0663451
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.23112938 0.37250346 0.3963672 ]
+ [0.23972695 0.33672997 0.4235431 ]
+ [0.24230416 0.26539066 0.49230528]
+ [0.2880592  0.29023957 0.42170125]
+ [0.2450254  0.27078575 0.48418888]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 35 : 1.0598439
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.23044516 0.3732402  0.3963146 ]
+ [0.2389669  0.33747783 0.4235553 ]
+ [0.24058582 0.26644444 0.49296975]
+ [0.2878301  0.29059014 0.42157975]
+ [0.24332549 0.27185076 0.48482376]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 36 : 1.053411
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.2297617  0.3739893  0.396249  ]
+ [0.23820831 0.33823958 0.42355213]
+ [0.23888138 0.2675087  0.49360996]
+ [0.28759873 0.29095554 0.42144576]
+ [0.2416391  0.27292576 0.4854351 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 37 : 1.0470464
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.22907734 0.3747482  0.3961744 ]
+ [0.23744904 0.33901244 0.4235385 ]
+ [0.2371877  0.26858056 0.4942318 ]
+ [0.2873615  0.29133338 0.42130503]
+ [0.23996311 0.27400807 0.4860289 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 38 : 1.0407495
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.22839078 0.375516   0.39609322]
+ [0.23668754 0.33979505 0.42351744]
+ [0.2355033  0.26965845 0.49483827]
+ [0.28711745 0.2917221  0.42116043]
+ [0.23829624 0.27509618 0.4866076 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 39 : 1.0345206
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.22770089 0.3762906  0.39600852]
+ [0.23592192 0.3405853  0.4234927 ]
+ [0.23382616 0.27074018 0.49543363]
+ [0.28686434 0.29212052 0.42101514]
+ [0.23663612 0.27618825 0.48717567]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 40 : 1.028359
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.22700717 0.37707084 0.39592206]
+ [0.23515211 0.34138194 0.423466  ]
+ [0.2321553  0.27182478 0.49601996]
+ [0.28660166 0.2925271  0.4208712 ]
+ [0.23498201 0.27728316 0.48773476]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 41 : 1.022265
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.22630918 0.37785614 0.39583465]
+ [0.23437694 0.34218466 0.4234384 ]
+ [0.23048955 0.2729116  0.4965989 ]
+ [0.28632814 0.2929416  0.42073023]
+ [0.23333302 0.27837998 0.48828703]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 42 : 1.0162376
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.22560622 0.3786455  0.39574832]
+ [0.23359618 0.34299204 0.42341182]
+ [0.22882837 0.27399918 0.49717247]
+ [0.28604314 0.29336315 0.42059377]
+ [0.23168842 0.27947757 0.48883408]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 43 : 1.0102769
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.2248983  0.37943843 0.39566323]
+ [0.23280945 0.34380308 0.4233874 ]
+ [0.22717158 0.27508688 0.49774146]
+ [0.2857463  0.29379103 0.42046273]
+ [0.23004803 0.28057557 0.48937637]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 44 : 1.0043827
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.22418503 0.38023505 0.3955799 ]
+ [0.23201647 0.3446186  0.4233649 ]
+ [0.22551881 0.27617496 0.4983063 ]
+ [0.28543743 0.29422534 0.42033723]
+ [0.22841147 0.2816734  0.48991513]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 45 : 0.99855465
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.22346641 0.38103423 0.39549938]
+ [0.23121703 0.34543714 0.42334583]
+ [0.22386953 0.2772615  0.49886894]
+ [0.28511602 0.29466525 0.42021883]
+ [0.2267782  0.28277048 0.4904514 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 46 : 0.99279225
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.22274254 0.38183606 0.39542142]
+ [0.23041122 0.34625852 0.4233302 ]
+ [0.22222432 0.27834764 0.4994281 ]
+ [0.28478208 0.29511076 0.4201071 ]
+ [0.22514872 0.2838662  0.4909851 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 47 : 0.98709506
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.22201324 0.38263953 0.3953472 ]
+ [0.2295991  0.34708259 0.42331833]
+ [0.22058293 0.27943128 0.4999858 ]
+ [0.28443587 0.29556096 0.42000312]
+ [0.22352277 0.28496042 0.49151686]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 48 : 0.9814629
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.22127886 0.38344544 0.39527565]
+ [0.22878088 0.3479086  0.42331046]
+ [0.21894519 0.28051335 0.50054145]
+ [0.28407723 0.29601625 0.4199066 ]
+ [0.2219008  0.2860526  0.49204654]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 49 : 0.97589535
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.22053918 0.38425243 0.39520836]
+ [0.22795634 0.34873644 0.42330727]
+ [0.2173112  0.28159326 0.50109553]
+ [0.28370583 0.29647598 0.4198182 ]
+ [0.22028245 0.28714252 0.49257502]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 50 : 0.9703919
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21979459 0.38506106 0.3951444 ]
+ [0.22712553 0.34956667 0.4233078 ]
+ [0.21568152 0.28267083 0.5016477 ]
+ [0.28332224 0.2969407  0.41973707]
+ [0.21866795 0.28823048 0.4931016 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 51 : 0.9649521
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.2190452  0.38587102 0.39508384]
+ [0.22628959 0.35039794 0.4233125 ]
+ [0.21405643 0.28374562 0.5021979 ]
+ [0.282927   0.2974095  0.4196635 ]
+ [0.21705776 0.28931555 0.49362674]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 52 : 0.9595756
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21829124 0.38668185 0.39502698]
+ [0.22544782 0.35123038 0.4233218 ]
+ [0.2124356  0.2848173  0.50274706]
+ [0.28251958 0.29788268 0.41959783]
+ [0.215452   0.2903975  0.4941505 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 53 : 0.954262
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21753266 0.38749334 0.39497396]
+ [0.2246003  0.3520643  0.4233354 ]
+ [0.21081974 0.2858856  0.5032947 ]
+ [0.28210065 0.29835916 0.4195402 ]
+ [0.2138508  0.29147625 0.49467292]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 54 : 0.9490107
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21676996 0.38830554 0.39492446]
+ [0.22374822 0.35289845 0.42335337]
+ [0.20920907 0.28695065 0.5038403 ]
+ [0.28167036 0.2988394  0.4194903 ]
+ [0.21225452 0.29255167 0.49519387]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 55 : 0.94382125
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21600309 0.38911828 0.39487866]
+ [0.22289091 0.3537336  0.4233754 ]
+ [0.20760329 0.28801185 0.5043849 ]
+ [0.28122848 0.29932365 0.41944784]
+ [0.21066312 0.29362348 0.4957134 ]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 2 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4222222222222222
+loss 56 : 0.93869317
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21523249 0.38993144 0.3948361 ]
+ [0.22202909 0.35456944 0.42340153]
+ [0.20600334 0.2890692  0.5049275 ]
+ [0.280776   0.29981115 0.41941282]
+ [0.2090774  0.2946912  0.49623144]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4444444444444444
+loss 57 : 0.9336259
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21445814 0.3907445  0.39479738]
+ [0.22116268 0.35540536 0.4234319 ]
+ [0.20440902 0.29012233 0.50546867]
+ [0.28031293 0.3003017  0.41938534]
+ [0.20749709 0.29575527 0.49674767]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4444444444444444
+loss 58 : 0.92861897
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21368055 0.3915574  0.39476204]
+ [0.22029236 0.35624164 0.42346603]
+ [0.20282094 0.29117137 0.50600773]
+ [0.27983937 0.3007953  0.41936535]
+ [0.2059228  0.29681486 0.49726242]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4444444444444444
+loss 59 : 0.9236719
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21289963 0.39237016 0.39473015]
+ [0.21941817 0.3570776  0.42350426]
+ [0.20123899 0.2922157  0.50654525]
+ [0.27935556 0.3012921  0.41935235]
+ [0.20435455 0.29787025 0.49777526]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4444444444444444
+loss 60 : 0.918784
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21211597 0.39318234 0.39470163]
+ [0.21854012 0.3579134  0.42354646]
+ [0.19966374 0.2932556  0.5070807 ]
+ [0.2788622  0.3017912  0.41934657]
+ [0.20279239 0.29892102 0.49828655]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4444444444444444
+loss 61 : 0.9139548
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21132933 0.39399427 0.39467645]
+ [0.21765894 0.35874873 0.42359227]
+ [0.19809534 0.29429042 0.5076142 ]
+ [0.27835906 0.3022934  0.41934752]
+ [0.20123716 0.2999669  0.49879593]]
+[2 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4444444444444444
+loss 62 : 0.909184
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.21054034 0.39480552 0.39465418]
+ [0.21677499 0.3595831  0.42364192]
+ [0.19653401 0.29532018 0.50814587]
+ [0.27784705 0.3027976  0.41935533]
+ [0.19968872 0.30100787 0.4993035 ]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4666666666666667
+loss 63 : 0.9044706
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20974897 0.39561576 0.3946353 ]
+ [0.21588801 0.36041728 0.42369473]
+ [0.19497994 0.29634503 0.5086751 ]
+ [0.27732593 0.3033041  0.41936994]
+ [0.19814716 0.30204356 0.49980932]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4666666666666667
+loss 64 : 0.89981437
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20895562 0.39642483 0.39461955]
+ [0.21499841 0.36125013 0.42375144]
+ [0.19343342 0.29736388 0.50920266]
+ [0.27679595 0.3038128  0.4193912 ]
+ [0.19661316 0.30307412 0.50031275]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4666666666666667
+loss 65 : 0.89521456
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20816036 0.39723307 0.39460662]
+ [0.21410662 0.36208227 0.42381108]
+ [0.19189471 0.29837814 0.5097271 ]
+ [0.2762579  0.30432335 0.4194187 ]
+ [0.19508651 0.3040994  0.50081414]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4666666666666667
+loss 66 : 0.8906708
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20736338 0.3980399  0.39459673]
+ [0.21321265 0.36291254 0.42387483]
+ [0.1903638  0.29938576 0.51025045]
+ [0.2757113  0.30483553 0.41945317]
+ [0.1935677  0.30511862 0.50131375]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4666666666666667
+loss 67 : 0.8861821
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20656498 0.39884564 0.39458936]
+ [0.21231699 0.363742   0.42394105]
+ [0.18884127 0.3003884  0.5107703 ]
+ [0.27515748 0.30534986 0.41949266]
+ [0.19205675 0.3061326  0.50181067]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 1 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4666666666666667
+loss 68 : 0.88174844
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20576526 0.39964962 0.39458507]
+ [0.21141973 0.36457002 0.4240103 ]
+ [0.18732685 0.3013847  0.5112884 ]
+ [0.2745959  0.30586562 0.41953853]
+ [0.19055384 0.3071407  0.50230545]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4888888888888889
+loss 69 : 0.87736875
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20496444 0.40045217 0.3945834 ]
+ [0.21052106 0.36539614 0.42408285]
+ [0.18582106 0.3023748  0.51180416]
+ [0.2740266  0.3063826  0.41959086]
+ [0.18905927 0.30814242 0.50279826]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4888888888888889
+loss 70 : 0.8730426
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20416304 0.40125254 0.3945844 ]
+ [0.20962134 0.36622053 0.4241581 ]
+ [0.18432404 0.30335894 0.512317  ]
+ [0.2734509  0.30690104 0.41964802]
+ [0.18757334 0.3091385  0.5032881 ]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4888888888888889
+loss 71 : 0.86876947
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20336069 0.40205136 0.39458793]
+ [0.2087208  0.36704275 0.42423642]
+ [0.18283613 0.30433643 0.51282746]
+ [0.2728684  0.30742037 0.41971123]
+ [0.1860958  0.31012788 0.50377625]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4888888888888889
+loss 72 : 0.86454874
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20255806 0.4028479  0.3945941 ]
+ [0.2078194  0.36786333 0.4243172 ]
+ [0.18135709 0.30530795 0.51333493]
+ [0.27227935 0.3079406  0.41978008]
+ [0.18462741 0.31111118 0.50426143]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 1 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.4888888888888889
+loss 73 : 0.86037976
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20175512 0.40364245 0.39460245]
+ [0.20691803 0.36868134 0.42440063]
+ [0.17988741 0.30627266 0.5138399 ]
+ [0.2716841  0.30846205 0.41985378]
+ [0.18316793 0.31208798 0.50474405]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 0 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5111111111111111
+loss 74 : 0.85626197
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20095198 0.40443507 0.39461297]
+ [0.20601608 0.36949736 0.42448655]
+ [0.17842726 0.30723074 0.51434195]
+ [0.27108288 0.30898404 0.41993305]
+ [0.1817174  0.31305832 0.5052242 ]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 0 1 1 1 2 2 1 2 2 2 1 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 1 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5111111111111111
+loss 75 : 0.8521947
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.20014888 0.40522534 0.39462575]
+ [0.20511435 0.37031063 0.42457497]
+ [0.17697673 0.30818197 0.5148413 ]
+ [0.27047637 0.30950677 0.4200169 ]
+ [0.18027659 0.31402197 0.50570136]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 0 1 1 1 2 2 1 2 2 2 0 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 0 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5555555555555556
+loss 76 : 0.8481776
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.19934599 0.40601265 0.3946413 ]
+ [0.20421262 0.37112167 0.4246657 ]
+ [0.1755355  0.30912653 0.51533794]
+ [0.26986402 0.31003    0.42010596]
+ [0.17884436 0.31497887 0.50617677]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 0 1 1 1 2 2 1 2 2 2 0 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 0 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5555555555555556
+loss 77 : 0.8442097
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.19854346 0.4067981  0.39465842]
+ [0.20331126 0.37193003 0.42475864]
+ [0.17410402 0.31006393 0.515832  ]
+ [0.26924652 0.3105538  0.4201997 ]
+ [0.17742206 0.31592909 0.5066489 ]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 0 1 1 1 2 2 1 2 2 2 0 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 0 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5555555555555556
+loss 78 : 0.8402906
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.19774139 0.40758055 0.39467797]
+ [0.20241018 0.37273586 0.424854  ]
+ [0.17268251 0.31099457 0.516323  ]
+ [0.26862407 0.31107756 0.4202983 ]
+ [0.17600958 0.31687227 0.50711817]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 0 1 1 1 2 2 1 2 2 2 0 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 0 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5555555555555556
+loss 79 : 0.8364195
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.19694002 0.4083606  0.3946994 ]
+ [0.20151034 0.37353832 0.4249513 ]
+ [0.17127115 0.3119179  0.51681095]
+ [0.2679973  0.31160152 0.4204012 ]
+ [0.17460683 0.31780788 0.50758535]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 0 1 1 1 2 2 1 2 2 2 0 2 2 2 1 2 2 1 1 1 1 1 1 2
+ 2 2 2 0 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5555555555555556
+loss 80 : 0.83259636
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.19613977 0.40913787 0.39472234]
+ [0.20061116 0.37433842 0.4250504 ]
+ [0.16986994 0.3128343  0.5172958 ]
+ [0.26736566 0.31212577 0.42050853]
+ [0.17321363 0.3187372  0.5080492 ]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 0 1 1 1 2 2 1 2 2 2 0 2 2 2 0 2 2 1 1 1 1 1 1 2
+ 2 2 2 0 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5777777777777777
+loss 81 : 0.8288199
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.19534007 0.40991217 0.3947478 ]
+ [0.1997131  0.37513548 0.4251515 ]
+ [0.16847877 0.31374323 0.51777804]
+ [0.26672998 0.31265005 0.42061996]
+ [0.17183058 0.31965926 0.5085102 ]]
+[1 2 2 2 2 2 2 1 2 2 1 1 2 0 1 1 1 2 2 1 2 2 2 0 2 2 2 0 2 2 1 1 1 1 1 1 2
+ 2 2 2 0 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.5777777777777777
+loss 82 : 0.82508993
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.19454184 0.41068375 0.39477447]
+ [0.19881643 0.37592927 0.4252543 ]
+ [0.1670979  0.31464523 0.5182569 ]
+ [0.26609027 0.31317416 0.4207356 ]
+ [0.17045748 0.32057422 0.50896823]]
+[1 2 2 2 2 2 2 1 2 1 1 1 2 0 1 1 1 2 2 1 2 2 1 0 2 2 2 0 2 2 1 1 0 1 1 1 2
+ 2 2 2 0 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.6444444444444445
+loss 83 : 0.8214057
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.19374464 0.4114522  0.39480317]
+ [0.19792084 0.3767199  0.4253593 ]
+ [0.16572721 0.31553957 0.5187332 ]
+ [0.26544642 0.31369808 0.4208555 ]
+ [0.16909425 0.3214818  0.5094239 ]]
+[1 2 2 2 2 2 2 1 2 1 1 1 2 0 1 1 1 2 2 1 2 2 1 0 2 2 2 0 2 2 1 1 0 1 1 1 2
+ 2 2 2 0 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.6444444444444445
+loss 84 : 0.8177666
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.19294892 0.41221774 0.39483333]
+ [0.19702725 0.3775072  0.42546564]
+ [0.1643673  0.31642675 0.5192059 ]
+ [0.2647995  0.31422156 0.42097887]
+ [0.16774152 0.3223822  0.5098763 ]]
+[1 2 2 2 2 2 2 1 2 1 1 1 2 0 1 1 1 2 2 1 2 2 1 0 2 2 2 0 2 2 1 1 0 1 1 1 2
+ 2 2 2 0 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.6444444444444445
+loss 85 : 0.81417227
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.19215474 0.41297975 0.39486557]
+ [0.19613498 0.37829125 0.42557383]
+ [0.16301775 0.31730616 0.5196761 ]
+ [0.2641486  0.31474474 0.4211067 ]
+ [0.16639882 0.323275   0.5103262 ]]
+[1 2 2 2 2 2 2 1 2 1 1 1 2 0 1 1 1 2 2 1 2 2 1 0 2 2 2 0 2 2 1 1 0 1 1 1 2
+ 2 2 2 0 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.6444444444444445
+loss 86 : 0.8106219
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.1913621  0.41373888 0.39489898]
+ [0.19524497 0.37907204 0.425683  ]
+ [0.16167887 0.31817836 0.5201428 ]
+ [0.26349497 0.31526744 0.42123765]
+ [0.16506651 0.32416058 0.51077294]]
+[1 2 2 2 2 2 2 1 2 1 1 1 2 0 1 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 1 0 1 1 1 2
+ 2 2 2 0 1 1 0 1]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.6888888888888889
+loss 87 : 0.8071151
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.19057116 0.4144946  0.3949342 ]
+ [0.1943567  0.37984884 0.42579448]
+ [0.16035023 0.31904265 0.52060705]
+ [0.26283845 0.31578925 0.4213723 ]
+ [0.16374448 0.32503852 0.51121694]]
+[1 2 2 2 2 2 2 1 2 1 1 1 2 0 1 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 1 0 1 1 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.7111111111111111
+loss 88 : 0.80365115
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.18978214 0.41524717 0.39497077]
+ [0.19347048 0.38062298 0.4259065 ]
+ [0.15903251 0.31990016 0.52106726]
+ [0.26217887 0.31631115 0.42150995]
+ [0.16243285 0.32590944 0.5116578 ]]
+[1 2 2 2 2 2 2 1 2 1 1 1 2 0 1 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 1 0 1 1 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.7111111111111111
+loss 89 : 0.8002295
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.18899508 0.4159966  0.39500836]
+ [0.1925867  0.381393   0.4260203 ]
+ [0.15772554 0.32074937 0.5215251 ]
+ [0.2615168  0.31683186 0.42165136]
+ [0.16113177 0.32677248 0.5120957 ]]
+[1 2 2 2 2 2 2 1 2 1 1 1 2 0 1 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 1 0 1 1 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.7111111111111111
+loss 90 : 0.7968495
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.18821009 0.41674238 0.3950476 ]
+ [0.1917053  0.38215938 0.4261353 ]
+ [0.15642926 0.32159156 0.52197915]
+ [0.26085216 0.31735188 0.421796  ]
+ [0.15984108 0.3276284  0.5125305 ]]
+[1 2 2 2 2 2 2 0 2 1 1 1 2 0 1 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 1 0 1 1 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.7333333333333333
+loss 91 : 0.7935107
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.1874272  0.41748497 0.3950878 ]
+ [0.19082643 0.3829221  0.42625144]
+ [0.15514362 0.32242575 0.5224306 ]
+ [0.26018533 0.31787103 0.42194366]
+ [0.15856074 0.32847655 0.51296276]]
+[1 2 2 2 2 2 2 0 2 1 1 1 2 0 1 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 1 0 1 1 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.7333333333333333
+loss 92 : 0.7902126
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.18664663 0.41822374 0.3951296 ]
+ [0.1899501  0.38368118 0.42636874]
+ [0.15386872 0.3232523  0.522879  ]
+ [0.2595166  0.3183894  0.422094  ]
+ [0.15729088 0.32931736 0.5133918 ]]
+[1 2 2 2 2 2 2 0 2 1 1 1 2 0 1 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 1 0 1 0 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.7555555555555555
+loss 93 : 0.78695446
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.18586856 0.41895914 0.39517224]
+ [0.18907651 0.3844366  0.42648688]
+ [0.15260461 0.32407147 0.52332395]
+ [0.25884566 0.31890675 0.4222476 ]
+ [0.15603167 0.33015054 0.5138177 ]]
+[1 2 2 2 2 2 2 0 2 1 1 1 2 0 0 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 0 0 1 0 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.8
+loss 94 : 0.78373575
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.18509272 0.41969115 0.39521614]
+ [0.18820563 0.38518825 0.42660612]
+ [0.15135126 0.3248827  0.52376604]
+ [0.2581734  0.31942305 0.42240354]
+ [0.15478285 0.33097643 0.5142407 ]]
+[1 2 2 2 2 2 2 0 2 1 1 1 2 0 0 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 0 0 1 0 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.8
+loss 95 : 0.7805561
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.18431947 0.4204197  0.39526087]
+ [0.18733796 0.38593602 0.426726  ]
+ [0.15010887 0.32568678 0.5242044 ]
+ [0.25749925 0.31993836 0.4225624 ]
+ [0.15354472 0.33179483 0.5146605 ]]
+[1 2 2 2 2 2 2 0 2 1 1 1 2 0 0 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 0 0 1 0 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.8
+loss 96 : 0.7774148
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.18354891 0.42114413 0.39530697]
+ [0.1864732  0.38667932 0.42684752]
+ [0.1488772  0.3264825  0.5246403 ]
+ [0.25682387 0.32045203 0.4227241 ]
+ [0.15231708 0.3326048  0.5150781 ]]
+[1 2 2 2 2 2 2 0 2 1 1 1 2 0 0 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 0 0 1 0 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.8
+loss 97 : 0.77431166
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.18278088 0.42186517 0.39535397]
+ [0.18561144 0.387419   0.42696962]
+ [0.14765626 0.32727093 0.5250729 ]
+ [0.25614718 0.3209648  0.422888  ]
+ [0.15110001 0.33340758 0.5154923 ]]
+[1 2 2 2 2 2 2 0 2 1 1 1 2 0 0 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 0 0 1 0 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.8
+loss 98 : 0.7712458
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.18201563 0.42258278 0.39540157]
+ [0.18475303 0.38815504 0.42709193]
+ [0.14644605 0.3280516  0.5255023 ]
+ [0.25546917 0.32147634 0.42305455]
+ [0.14989348 0.3342033  0.51590323]]
+[1 2 2 2 2 2 2 0 2 1 1 1 2 0 0 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 0 0 1 0 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.8
+loss 99 : 0.76821655
+[[0 1 0]
+ [0 1 0]
+ [0 0 1]
+ [0 1 0]
+ [0 0 1]]
+[[0.18125333 0.42329618 0.39545047]
+ [0.18389797 0.38888678 0.42721528]
+ [0.1452466  0.32882473 0.5259287 ]
+ [0.25479022 0.32198676 0.42322302]
+ [0.14869732 0.33499107 0.51631165]]
+[1 2 2 2 2 2 2 0 2 1 1 0 2 0 0 0 0 2 2 1 2 2 1 0 2 2 2 0 2 2 1 0 0 1 0 1 2
+ 2 2 2 0 1 1 0 0]
+[1 1 2 1 2 2 2 0 2 1 1 0 2 0 0 0 0 2 1 0 2 2 1 0 2 2 2 0 2 2 0 0 0 1 0 0 1
+ 2 1 2 0 1 1 0 0]
+acc : 0.8222222222222222
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="sd">'''</span>
+<span class="sd">머신러신 중요한 세가지 </span>
+<span class="sd">1. 정규화 표준화 하기 </span>
+<span class="sd">2. 셔플하기</span>
+<span class="sd">3. 문자데이터 숫자로 인코딩 preprocessing</span>
+<span class="sd">'''</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="11_2_iris_sparse">
+<a class="anchor" href="#11_2_iris_sparse" aria-hidden="true"><span class="octicon octicon-link"></span></a>11_2_iris_sparse<a class="anchor-link" href="#11_2_iris_sparse"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">model_selection</span><span class="p">,</span> <span class="n">preprocessing</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>x, y 데이터 설정 (sparse버전)</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">make_xy_sparse</span><span class="p">():</span>
+    <span class="n">iris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'/content/iris.csv'</span><span class="p">)</span>
+    <span class="c1">#print(iris)</span>
+
+    <span class="n">variety</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">variety</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">variety</span><span class="p">)</span>
+
+    <span class="n">enc</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">LabelEncoder</span><span class="p">()</span>        <span class="c1"># binarizer 대신 encoder 사용</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">enc</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">variety</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">'variety'</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>softmax 모델 구축 (sparse버전)</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">softmax_regression_iris</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">Dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="c1"># (150, 3) = (150, 4) @ (4, 3)</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">@</span> <span class="n">w</span> <span class="o">+</span> <span class="n">b</span>
+
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_xy_sparse</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># (150, 4) (150,)</span>
+
+    <span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">train_size</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">)</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">([</span><span class="mi">3</span><span class="p">]))</span>
+
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+            <span class="n">hx</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+            <span class="n">scce</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">SparseCategoricalCrossentropy</span><span class="p">()</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">scce</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">hx</span><span class="p">)</span>
+
+        <span class="n">gradient</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">gradient</span><span class="p">,</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">]))</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+
+<span class="c1">## 예측하기</span>
+
+    <span class="n">z</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>              <span class="c1"># (45, 3)</span>
+
+<span class="c1">## y와 predict 비교하기 </span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">y_test</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[:</span><span class="mi">5</span><span class="p">])</span>
+
+    <span class="n">p_arg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>    <span class="c1"># argmax 가장 큰 값의 위치를 찾음. </span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">p_arg</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'acc :'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">p_arg</span> <span class="o">==</span> <span class="n">y_test</span><span class="p">))</span>
+    <span class="c1">## 한번 데이터를 섞어야 (셔플) 값이 나온다. </span>
+
+
+<span class="n">softmax_regression_iris</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0         Setosa
+1         Setosa
+2         Setosa
+3         Setosa
+4         Setosa
+         ...    
+145    Virginica
+146    Virginica
+147    Virginica
+148    Virginica
+149    Virginica
+Name: variety, Length: 150, dtype: object
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2
+ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+ 2 2]
+     sepal.length  sepal.width  petal.length  petal.width
+0             5.1          3.5           1.4          0.2
+1             4.9          3.0           1.4          0.2
+2             4.7          3.2           1.3          0.2
+3             4.6          3.1           1.5          0.2
+4             5.0          3.6           1.4          0.2
+..            ...          ...           ...          ...
+145           6.7          3.0           5.2          2.3
+146           6.3          2.5           5.0          1.9
+147           6.5          3.0           5.2          2.0
+148           6.2          3.4           5.4          2.3
+149           5.9          3.0           5.1          1.8
+
+[150 rows x 4 columns]
+(150, 4) (150,)
+0 1.3028831
+1 1.2306578
+2 1.1696576
+3 1.116833
+4 1.0706124
+5 1.0301757
+6 0.9950276
+7 0.964772
+8 0.9390031
+9 0.91727054
+10 0.89908195
+11 0.88392615
+12 0.87130153
+13 0.86074156
+14 0.8518312
+15 0.84421635
+16 0.83760446
+17 0.8317612
+18 0.8265028
+19 0.8216884
+20 0.8172116
+21 0.81299263
+22 0.808973
+23 0.80510956
+24 0.8013713
+25 0.79773486
+26 0.79418427
+27 0.7907072
+28 0.78729504
+29 0.7839412
+30 0.7806411
+31 0.7773911
+32 0.7741883
+33 0.77103066
+34 0.76791656
+35 0.7648447
+36 0.7618136
+37 0.75882226
+38 0.7558701
+39 0.7529561
+40 0.7500795
+41 0.74723953
+42 0.7444357
+43 0.74166733
+44 0.7389337
+45 0.7362343
+46 0.73356855
+47 0.7309358
+48 0.72833574
+49 0.72576743
+50 0.7232308
+51 0.720725
+52 0.71824974
+53 0.71580434
+54 0.71338826
+55 0.71100146
+56 0.708643
+57 0.70631266
+58 0.7040098
+59 0.70173424
+60 0.69948524
+61 0.69726264
+62 0.6950659
+63 0.69289464
+64 0.69074845
+65 0.6886268
+66 0.68652946
+67 0.6844561
+68 0.6824061
+69 0.68037915
+70 0.6783752
+71 0.6763935
+72 0.67443377
+73 0.6724959
+74 0.6705794
+75 0.6686839
+76 0.666809
+77 0.6649547
+78 0.6631204
+79 0.6613057
+80 0.6595106
+81 0.65773475
+82 0.65597767
+83 0.6542391
+84 0.6525189
+85 0.6508168
+86 0.6491323
+87 0.6474653
+88 0.64581555
+89 0.64418274
+90 0.6425666
+91 0.640967
+92 0.6393836
+93 0.6378161
+94 0.6362644
+95 0.63472813
+96 0.63320726
+97 0.63170135
+98 0.63021016
+99 0.62873375
+[[0.1467953  0.42612004 0.42708465]
+ [0.6602775  0.251206   0.08851652]
+ [0.6858204  0.23210046 0.08207917]
+ [0.08892232 0.4145503  0.49652734]
+ [0.07765665 0.3625827  0.55976063]
+ [0.05711408 0.3885737  0.55431217]
+ [0.09477385 0.35854858 0.54667753]
+ [0.07468852 0.35417125 0.5711402 ]
+ [0.793415   0.15496041 0.05162461]
+ [0.19874613 0.4401345  0.3611194 ]
+ [0.587206   0.2978507  0.11494326]
+ [0.200839   0.38882583 0.41033524]
+ [0.15564801 0.4442687  0.40008327]
+ [0.13255002 0.49039978 0.37705016]
+ [0.25389248 0.409918   0.33618948]
+ [0.17739032 0.37254643 0.45006323]
+ [0.08943229 0.41883525 0.49173248]
+ [0.1089199  0.35597762 0.5351025 ]
+ [0.08631726 0.38883033 0.5248524 ]
+ [0.13823745 0.3878925  0.47387007]
+ [0.07230218 0.3671341  0.56056374]
+ [0.14880373 0.38538325 0.46581304]
+ [0.7080558  0.21604523 0.07589903]
+ [0.71028495 0.21382585 0.07588921]
+ [0.5985211  0.29077822 0.1107006 ]
+ [0.08908331 0.3095573  0.6013594 ]
+ [0.762051   0.18064748 0.05730148]
+ [0.08936355 0.37025344 0.540383  ]
+ [0.04063046 0.3671503  0.59221923]
+ [0.6638113  0.24431773 0.09187101]
+ [0.14366521 0.44904286 0.40729198]
+ [0.09104692 0.38824758 0.5207055 ]
+ [0.17812626 0.41642195 0.40545174]
+ [0.6003567  0.2952262  0.1044171 ]
+ [0.6411057  0.25562125 0.10327303]
+ [0.08415774 0.3403346  0.5755077 ]
+ [0.09465263 0.32094452 0.58440286]
+ [0.66206974 0.24774836 0.09018194]
+ [0.06106435 0.38827989 0.5506557 ]
+ [0.19180736 0.43725255 0.37094015]
+ [0.17254753 0.4317753  0.39567724]
+ [0.20405142 0.40512553 0.39082304]
+ [0.13432959 0.33130458 0.5343659 ]
+ [0.18574339 0.42975086 0.3845057 ]
+ [0.18453299 0.43320367 0.38226333]]
+(45, 3)
+[1 0 0 2 2]
+[[0.1467953  0.42612004 0.42708465]
+ [0.6602775  0.251206   0.08851652]
+ [0.6858204  0.23210046 0.08207917]
+ [0.08892232 0.4145503  0.49652734]
+ [0.07765665 0.3625827  0.55976063]]
+[2 0 0 2 2 2 2 2 0 1 0 2 1 1 1 2 2 2 2 2 2 2 0 0 0 2 0 2 2 0 1 2 1 0 0 2 2
+ 0 2 1 1 1 2 1 1]
+acc : 0.9333333333333333
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="pythonhee/cosmos"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/cosmos/2022/07/04/CNN.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/cosmos/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/cosmos/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/cosmos/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" target="_blank" title="fastai"><svg class="svg-icon grey"><use xlink:href="/cosmos/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
